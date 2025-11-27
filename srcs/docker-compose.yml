@@ -1,0 +1,25 @@
+services:
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    ports:
+      - 443:443
+    depends_on:
+      - wordpress
+    restart: always
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress
+    expose:
+      - "9000"
+    depends_on:
+      - mariadb
+    restart: always
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    expose:
+      - "3306"
+    restart: always
+    env_file:
+      - .env
