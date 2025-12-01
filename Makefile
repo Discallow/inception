@@ -9,3 +9,6 @@ start:
 
 stop:
 	@docker compose --file ./srcs/docker-compose.yml stop
+re:
+	@docker compose --file ./srcs/docker-compose.yml down
+	@docker compose --file ./srcs/docker-compose.yml up -d

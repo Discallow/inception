@@ -7,6 +7,8 @@ services:
     depends_on:
       - wordpress
     restart: always
+    networks:
+      - inception
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
@@ -15,6 +17,10 @@ services:
     depends_on:
       - mariadb
     restart: always
+    env_file:
+      - .env
+    networks:
+      - inception
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
@@ -23,3 +29,8 @@ services:
     restart: always
     env_file:
       - .env
+    networks:
+      - inception
+networks:
+  inception:
+    driver: bridge

@@ -15,8 +15,10 @@ RUN curl -O https://wordpress.org/latest.tar.gz && \
 
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY ./tools/wp-config.php ./wp-config.php
+COPY ./tools/wordpress.sh .
+RUN chmod +x ./wordpress.sh
 # Expose FastCGI port (used by NGINX)
 EXPOSE 9000
 
 # Start PHP-FPM in the foreground
-CMD ["/usr/sbin/php-fpm8.2", "-F"]
+CMD ["./wordpress.sh"]
