@@ -22,7 +22,7 @@ openssl req -newkey rsa:4096 -sha256 -x509 -days 365 \
   -subj "/C=PT/ST=LIS/L=Lisbon/O=42/OU=Inception/CN=dioalexa.42.fr"
 
 
-COPY ./conf/default /etc/nginx/sites-available/default
+COPY ./conf/nginx.conf /etc/nginx/conf.d
 COPY ./rickroll-roll.gif /var/www/html/rickroll-roll.gif
 
 #This is only for documentation, since this is defined in Docker Compose, not in Dockerfile
