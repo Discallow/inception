@@ -3,7 +3,12 @@ FROM debian:bookworm
 
 # Update package lists, install PHP-FPM and required extensions
 RUN apt-get -y update && \
-    apt-get install -y php php-fpm php-mysql curl tar
+    apt-get install -y php php-fpm php-mysql curl tar netcat-openbsd
+
+# Install wp-cli
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp
 
 WORKDIR /var/www/html
 
@@ -14,7 +19,7 @@ RUN curl -O https://wordpress.org/latest.tar.gz && \
     rm -rf wordpress latest.tar.gz
 
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
-COPY ./tools/wp-config.php ./wp-config.php
+#COPY ./tools/wp-config.php ./wp-config.php
 COPY ./tools/wordpress.sh .
 RUN chmod +x ./wordpress.sh
 # Expose FastCGI port (used by NGINX)

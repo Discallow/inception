@@ -3,28 +3,31 @@ services:
     build: ./requirements/nginx
     container_name: nginx
     ports:
-      - 443:443
+      - "443:443"
     depends_on:
       - wordpress
     restart: always
     networks:
       - inception
     volumes:
-      - wordpress_data:/var/www/html:cached
+      - wordpress_data:/var/www/html
+
   wordpress:
     build: ./requirements/wordpress
     container_name: wordpress
     expose:
       - "9000"
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     restart: always
     env_file:
       - .env
     networks:
       - inception
     volumes:
-      - wordpress_data:/var/www/html:cached
+      - wordpress_data:/var/www/html
+
   mariadb:
     build: ./requirements/mariadb
     container_name: mariadb
@@ -37,9 +40,16 @@ services:
       - inception
     volumes:
       - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u$MYSQL_USER -p$MYSQL_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
 networks:
   inception:
     driver: bridge
+
 volumes:
   wordpress_data:
     driver: local
@@ -47,6 +57,7 @@ volumes:
       type: none
       device: /home/discallow/data/wordpress
       o: bind
+
   mariadb_data:
     driver: local
     driver_opts:
