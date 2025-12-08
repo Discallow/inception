@@ -1,7 +1,12 @@
 [mysqld]
 bind-address = 0.0.0.0
+# Directory where MariaDB stores all database files, tables, and logs.
 datadir = /var/lib/mysql
+# Path to the Unix socket file used for local connections.
 socket = /var/run/mysqld/mysqld.sock
+# Ensures the TCP network interface is enabled. It's required for WordPress being able to connect to MariaDB
 skip-networking = false
 port = 3306
+# The OS user that the MariaDB server runs as.
+# Important for permissions on data and runtime directories.
 user = mysql

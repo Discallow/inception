@@ -23,7 +23,6 @@ openssl req -newkey rsa:4096 -sha256 -x509 -days 365 \
 
 
 COPY ./conf/nginx.conf /etc/nginx/conf.d
-COPY ./rickroll-roll.gif /var/www/html/rickroll-roll.gif
 
 #This is only for documentation, since this is defined in Docker Compose, not in Dockerfile
 EXPOSE 443

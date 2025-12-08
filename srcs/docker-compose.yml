@@ -2,6 +2,8 @@ services:
   nginx:
     build: ./requirements/nginx
     container_name: nginx
+    # HOST_PORT:CONTAINER_PORT
+    # Client connects through port 443 and Docker forwards to container port 443, that's why it needs to be 443:443
     ports:
       - "443:443"
     depends_on:
@@ -19,6 +21,7 @@ services:
       - "9000"
     depends_on:
       mariadb:
+      # Start WordPress only after MariaDB is healthy
         condition: service_healthy
     restart: always
     env_file:
@@ -41,14 +44,17 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u$MYSQL_USER -p$MYSQL_PASSWORD || exit 1"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD || exit 1"]
+                                              # Check if MySQL responds; exit 1 if not
+      interval: 5s                            # Check every 5 seconds
+      timeout: 3s                             # Each check can take max 3 seconds
+      retries: 10                             # Fail healthcheck if 10 checks fail
 
 networks:
   inception:
-    driver: bridge
+    driver: bridge                     # Bridge network = private LAN for containers.
+                                       # They can communicate using container names.
+                                       # Isolated from the host for security.
 
 volumes:
   wordpress_data:
@@ -56,11 +62,14 @@ volumes:
     driver_opts:
       type: none
       device: /home/discallow/data/wordpress
-      o: bind
+      o: bind                          # Bind mount = store WordPress files on host.
+                                       # Data persists even if container/image is rebuilt.
 
   mariadb_data:
     driver: local
     driver_opts:
       type: none
       device: /home/discallow/data/mysql
-      o: bind
+      o: bind                          # Bind mount = store MariaDB database files on host.
+                                       # Database is not lost when the DB container is recreated.
+
