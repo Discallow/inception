@@ -145,7 +145,7 @@ AI (ChatGPT) was used for:
 - MariaDB initialization script
 - WordPress initialization script
 
-## Technical Comparisons (Required by Subject)
+### Technical Comparisons
 ### Virtual Machines vs Docker
 
 | Feature            | Virtual Machines                          | Docker Containers                         |
