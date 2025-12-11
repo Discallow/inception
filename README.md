@@ -34,9 +34,6 @@ The goal is to understand containerization concepts, image-building strategies, 
 
 - Docker
 - Docker Compose
-- A valid TLS certificate pair (.crt and .key)
-- Environment Variables :
-    - All environment variables must be stored in a .env file (not committed to Git). An example file .env is provided.
 
 To run the project:
 ```bash
