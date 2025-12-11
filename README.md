@@ -5,7 +5,7 @@ _This project has been created as part of the 42 curriculum by dioalexa._
 - [Description](#Description)
 - [Instructions](#Instructions)
 - [Resources](#resources)
-- [Installation](#installation)
+- [Project Description](#project-description)
 - [Usage](#usage)
 - [Built-in Commands](#built-in-commands)
 - [External Commands](#external-commands)
@@ -78,7 +78,7 @@ docker volume rm $(docker volume ls -q)
 sudo rm -rf /home/<user>/data/wordpress/* /home/<user>/data/mysql/*
 ```
 
-## 3. Resources
+## Resources
 
 ### Documentation used:
 
@@ -119,7 +119,7 @@ AI (ChatGPT) was used for:
 - Drafting documentation structure and improving technical explanations;
 - All implementation, debugging, and architectural decisions were made manually.
 
-## 4. Project Description
+## Project Description
 
 - The project uses Docker to build three independent services:
 
@@ -156,7 +156,7 @@ AI (ChatGPT) was used for:
 | Isolation          | Strong (hardware-level)                  | Process-level                             |
 | Use case           | Full system simulation                   | Application packaging & microservices     |
 
-Summary: Docker is significantly more efficient for microservices and application deployment, while VMs provide stronger isolation but require more resources.
+**Summary:** Docker is significantly more efficient for microservices and application deployment, while VMs provide stronger isolation but require more resources.
 
 ### Secrets vs Environment Variables
 
@@ -166,7 +166,7 @@ Summary: Docker is significantly more efficient for microservices and applicatio
 | Security                 | Visible via `docker inspect`          | Not visible, injected at runtime           |
 | Best use                 | Non-sensitive configuration           | Passwords, API keys, TLS certificates      |
 
-Summary: Environment variables define configuration. Secrets must be used for confidential credentials in production.
+**Summary:** Environment variables define configuration. Secrets must be used for confidential credentials in production.
 
 ### Docker Network vs Host Network
 
@@ -177,21 +177,25 @@ Summary: Environment variables define configuration. Secrets must be used for co
 | Security              | Higher                                | Lower                                     |
 | Use case              | Multi-container orchestration          | High-performance network applications     |
 
-Summary: Bridge networks are ideal for orchestrated, multi-container designs where explicit routing and isolation are required.
+**Summary:** Bridge networks are ideal for orchestrated, multi-container designs where explicit routing and isolation are required.
 
 ### Docker Volumes vs Bind Mounts
 
-| Feature                  | Docker Volume                          | Bind Mount                                  |
-|---------------------------|---------------------------------------|--------------------------------------------|
-| Managed by Docker         | Yes                                    | No                                         |
-| Location                  | `/var/lib/docker/volumes/...`          | Any path on the host                        |
-| Portability               | High                                   | Low                                         |
-| Use case                  | Production & persistence               | Development & exact host path requirement  |
+| Feature                  | Docker Volume                                      | Bind Mount                                    |
+|---------------------------|---------------------------------------------------|-----------------------------------------------|
+| Managed by Docker         | Yes                                               | No                                            |
+| Location                  | Docker-managed path, e.g., `/var/lib/docker/volumes/...` | Any path on the host filesystem              |
+| Persistence               | Data persists even if the container is removed    | Data persists on host, tied to the exact path |
+| Isolation                 | Fully managed by Docker, container filesystem is separate | Directly exposed to host, requires manual permission management |
+| Portability               | High — volumes can be moved between hosts or containers | Low — tied to host path                        |
+| Use case                  | Production or long-term persistent data, database storage | Development, live editing, or when you need exact host path access |
 
-Summary: Volumes provide portability and Docker-level management, while bind mounts allow precise storage locations such as /home/user/data.
+**Summary:** Docker volumes allow persistent, isolated, and portable storage even without a bind mount; bind mounts are useful when you need direct access to files on the host, but require manual management of permissions and paths. Without a volume or bind mount, container data is ephemeral and will be erased when the container is removed.
 
 
 #####
+```bash
 docker stop $(docker ps -aq); docker rm $(docker ps -aq); docker rmi -f $(docker images -aq);
 docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q);
 sudo rm -rf /home/discallow/data/wordpress/* /home/discallow/data/mysql/*
+```
