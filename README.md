@@ -97,75 +97,76 @@ AI (ChatGPT) was used for:
 - Drafting documentation structure and improving technical explanations;
 - All implementation, debugging, and architectural decisions were made manually.
 
-4. Project Description
-Use of Docker
+## 4. Project Description
 
-The project uses Docker to build three independent services:
+- The project uses Docker to build three independent services:
 
-MariaDB container:
-Custom Debian-based image running MariaDB, with an initialization script that creates users, database schema, and permissions based on environment variables.
+### MariaDB container:
+- Custom Debian-based image running MariaDB, with an initialization script that creates users, database schema, and permissions based on environment variables.
 
-WordPress + PHP-FPM container:
-Custom image that installs PHP, WordPress CLI, WordPress core, and sets up an administrator and a subscriber user using environment variables.
+### WordPress + PHP-FPM container:
+- Custom image that installs PHP, WordPress CLI, WordPress core, and sets up an administrator and a subscriber user using environment variables.
 
-NGINX container:
-Custom image providing a reverse proxy with HTTPS enabled using a self-signed TLS certificate.
-NGINX forwards PHP requests to the WordPress PHP-FPM container (FastCGI).
+### NGINX container:
+- Custom image providing a reverse proxy with HTTPS enabled using a self-signed TLS certificate.
+- NGINX forwards PHP requests to the WordPress PHP-FPM container (FastCGI).
 
-A Docker bridge network ensures communication between containers using DNS names.
-Bind-mounted volumes ensure persistence of database and WordPress data outside containers.
+### A Docker bridge network ensures communication between containers using DNS names.
+### Bind-mounted volumes ensure persistence of database and WordPress data outside containers.
 
-Sources Included
+### Sources Included:
 
-srcs/docker-compose.yml
+- srcs/docker-compose.yml
+- Custom Dockerfiles for each service
+- Configuration files (nginx.conf, 50-server.cnf, www.conf)
+- TLS certificate creation script
+- MariaDB initialization script
+- WordPress initialization script
 
-Custom Dockerfiles for each service
+## Technical Comparisons (Required by Subject)
+### Virtual Machines vs Docker
 
-Configuration files (nginx.conf, 50-server.cnf, www.conf)
-
-TLS certificate creation script
-
-MariaDB initialization script
-
-WordPress initialization script
-
-5. Technical Comparisons (Required by Subject)
-4.1 Virtual Machines vs Docker
-Aspect	Virtual Machine	Docker Container
-Guest OS	Full OS per VM	Shares host kernel
-Resource usage	Heavy	Lightweight
-Startup time	Slow	Very fast
-Isolation level	Strong (hardware-level)	Process-level
-Purpose	Full system simulation	Application packaging
+| Feature            | Virtual Machines                          | Docker Containers                         |
+|-------------------|------------------------------------------|-------------------------------------------|
+| Virtualization     | Full hardware virtualization             | OS-level virtualization (lightweight)    |
+| Resource usage     | Heavy, each VM runs full OS              | Lightweight, shares host OS kernel       |
+| Startup time       | Slow                                     | Fast                                      |
+| Isolation          | Strong (hardware-level)                  | Process-level                             |
+| Use case           | Full system simulation                   | Application packaging & microservices     |
 
 Summary: Docker is significantly more efficient for microservices and application deployment, while VMs provide stronger isolation but require more resources.
 
-4.2 Secrets vs Environment Variables
-Aspect	Environment Variables	Docker Secrets
-Storage	In .env files or Compose file	Encrypted and managed by Docker
-Security	Visible via docker inspect	Hidden at runtime
-Best use	Non-sensitive config	Passwords, certificates
+### Secrets vs Environment Variables
+
+| Feature                  | Environment Variables                 | Docker Secrets                              |
+|---------------------------|--------------------------------------|---------------------------------------------|
+| Storage                  | Plain text in `.env` or Compose file | Encrypted, managed by Docker Swarm          |
+| Security                 | Visible via `docker inspect`          | Not visible, injected at runtime           |
+| Best use                 | Non-sensitive configuration           | Passwords, API keys, TLS certificates      |
 
 Summary: Environment variables define configuration. Secrets must be used for confidential credentials in production.
 
-4.3 Docker Network vs Host Network
-Aspect	Docker Bridge Network	Host Network
-Isolation	Containers isolated from host	Container shares host network stack
-Security	Higher	Lower
-Port binding	Required	Not needed
-Use case	Multi-service stacks	High-performance network apps
+### Docker Network vs Host Network
+
+| Feature               | Docker Bridge Network                  | Host Network                              |
+|-----------------------|---------------------------------------|-------------------------------------------|
+| Isolation             | Containers isolated from host         | Shares host network stack                 |
+| Port binding          | Required                              | Not needed                                |
+| Security              | Higher                                | Lower                                     |
+| Use case              | Multi-container orchestration          | High-performance network applications     |
 
 Summary: Bridge networks are ideal for orchestrated, multi-container designs where explicit routing and isolation are required.
 
-4.4 Docker Volumes vs Bind Mounts
-Aspect	Volume	Bind Mount
-Managed by Docker	Yes	No
-Location	/var/lib/docker/volumes/...	Any host path
-Backups	Easy	Controlled manually
-Use case	Generic persistent data	Projects requiring exact host path
+### Docker Volumes vs Bind Mounts
+
+| Feature                  | Docker Volume                          | Bind Mount                                  |
+|---------------------------|---------------------------------------|--------------------------------------------|
+| Managed by Docker         | Yes                                    | No                                         |
+| Location                  | `/var/lib/docker/volumes/...`          | Any path on the host                        |
+| Portability               | High                                   | Low                                         |
+| Use case                  | Production & persistence               | Development & exact host path requirement  |
 
 Summary: Volumes provide portability and Docker-level management, while bind mounts allow precise storage locations such as /home/user/data.
-
 
 
 #####
