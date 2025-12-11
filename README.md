@@ -37,20 +37,45 @@ The goal is to understand containerization concepts, image-building strategies, 
 
 To run the project:
 ```bash
-$make
+make
 ```
 
-To stop the stack:
+This will:
 
+- Build each service image (nginx, wordpress, mariadb)
+- Create Docker volumes and networks
+- Initialize the database and WordPress installation
+- Launch all containers in detached mode
+
+### Confirm Services Are Running
+
+Check container status:
 ```bash
-$make down
+docker ps
 ```
 
-To clean persistent volumes:
+### Accessing the Website
+
+Once containers are running:
+
+- Open your browser
+- Go to: https://<user>.42.fr/
+
+You should see your WordPress site.
+To log into the admin dashboard, go to: https://<user>.42.fr/wp-admin/
+To log into the user dashboard, go to: https://<user>.42.fr/wp-login.php/
+
+### To stop all the containers:
 
 ```bash
-$docker volume rm $(docker volume ls -q)
-$sudo rm -rf /home/user/data/wordpress/* /home/user/data/mysql/*
+make down
+```
+
+### To clean persistent volumes:
+
+```bash
+docker volume rm $(docker volume ls -q)
+sudo rm -rf /home/user/data/wordpress/* /home/user/data/mysql/*
 ```
 
 ## 3. Resources
