@@ -32,6 +32,12 @@ if ! wp core is-installed --allow-root --path=/var/www/html; then
 		--admin_password="$WP_ADMIN_PASSWORD" \
 		--admin_email="$WP_ADMIN_EMAIL" \
 		--allow-root
+	# To access admin panel: https://your-domain/wp-admin.php
+	wp user create $WP_USER $WP_USER_EMAIL \
+    --role=subscriber \
+    --user_pass=$WP_USER_PASSWORD \
+    --allow-root
+	# To access admin panel: https://your-domain/wp-login.php
 fi
 
 # Start PHP-FPM in the foreground
