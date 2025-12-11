@@ -62,7 +62,9 @@ Admin and subscriber credentials are defined here and used by WordPress and Mari
 
 ### To check that all containers are running:
 
+```bash
 docker ps
+```
 
 Expected output:
 
