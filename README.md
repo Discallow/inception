@@ -12,7 +12,7 @@ _This project has been created as part of the 42 curriculum by dioalexa._
 - [Error Handling](#error-handling)
 - [Resources](#resources)
 - [Author](#author)
-## 1. Description
+## Description
 
 Inception is a systems-administration and container-orchestration project whose objective is to build a fully containerized multi-service infrastructure using Docker.
 The project requires assembling a functional WordPress website by provisioning and orchestrating multiple Docker containers interconnected through a custom network.
@@ -28,7 +28,7 @@ The result is a minimal, reproducible, and isolated environment that runs:
 
 The goal is to understand containerization concepts, image-building strategies, the use of volumes, networking, and secure configuration through environment variables and secrets.
 
-## 2. Instructions
+## Instructions
 
 **Requirements:**
 
@@ -75,7 +75,7 @@ make down
 
 ```bash
 docker volume rm $(docker volume ls -q)
-sudo rm -rf /home/user/data/wordpress/* /home/user/data/mysql/*
+sudo rm -rf /home/<user>/data/wordpress/* /home/<user>/data/mysql/*
 ```
 
 ## 3. Resources
