@@ -74,11 +74,38 @@ mysql -u root -p
 ```bash
 SELECT User, Host FROM mysql.user;
 ```
+- To check if the database exists:
+
+```bash
+SHOW DATABASES;
+```
+
+- To check if the database has any info:
+
+Select database:
+```bash
+USE wordpress;
+```
+
+List tables:
+```bash
+SHOW TABLES;
+```
 
 - Stopping containers:
 
 ```bash
 make down
+```
+
+- To resume, inside mariaDB:
+
+```bash
+SHOW DATABASES;                     -- Confirm database exists
+USE wordpress;                      -- Select the WP database
+SHOW TABLES;                        -- List all tables
+SELECT COUNT(*) FROM wp_users;      -- Check table contents
+SELECT * FROM wp_users;             -- Inspect actual data
 ```
 
 - Cleaning volumes:
