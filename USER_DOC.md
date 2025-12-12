@@ -54,7 +54,7 @@ WP_ADMIN_PASSWORD
 WP_USER_PASSWORD
 ```
 
-**.env must never be committed to Git.**
+**.env must never be committed to Git with credentials.**
 
 Admin and subscriber credentials are defined here and used by WordPress and MariaDB.
 
