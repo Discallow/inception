@@ -63,6 +63,18 @@ This process will:
 
 ## Managing Containers and Volumes
 
+- Login into mariaDB database:
+  
+```bash
+docker exec -it mariadb bash
+mysql -u root -p
+```
+- After logging into mariaDB, we can also list all users and permissions:
+
+```bash
+SELECT User, Host FROM mysql.user;
+```
+
 - Stopping containers:
 
 ```bash
