@@ -6,12 +6,7 @@ _This project has been created as part of the 42 curriculum by dioalexa._
 - [Instructions](#Instructions)
 - [Resources](#resources)
 - [Project Description](#project-description)
-- [Usage](#usage)
-- [Built-in Commands](#built-in-commands)
-- [External Commands](#external-commands)
-- [Error Handling](#error-handling)
-- [Resources](#resources)
-- [Author](#author)
+
 ## Description
 
 Inception is a systems-administration and container-orchestration project whose objective is to build a fully containerized multi-service infrastructure using Docker.
@@ -82,7 +77,7 @@ sudo rm -rf /home/<user>/data/wordpress/* /home/<user>/data/mysql/*
 
 ### Documentation used:
 
-### - YouTube videos:
+### YouTube videos:
   - [Network Chuck - Docker Tutorials](https://www.youtube.com/watch?v=dH3DdLy574M&list=PLIhvC56v63IJlnU4k60d0oFIrsbXEivQo)
   - [FreeCodeCamp - Docker Tutorial for Beginners - A Full DevOps Course on How to Run Applications in Containers](https://www.youtube.com/watch?v=fqMOX6JJhGo)
   - [DevOps Directive - Complete Docker Course - From BEGINNER to PRO! (Learn Containers)](https://www.youtube.com/watch?v=RqTEHSBrYFw)
@@ -92,13 +87,13 @@ sudo rm -rf /home/<user>/data/wordpress/* /home/<user>/data/mysql/*
   - [Sematext - SSL/TLS Explained in 7 Minutes](https://www.youtube.com/watch?v=67Kfsmy_frM)
   - [Computerphile - TLS Handshake Explained](https://www.youtube.com/watch?v=86cQJ0MMses)
 
-### - MariaDB Knowledge Base
+### MariaDB Knowledge Base
  - [Import and Export Databases in MySQL using Command Line](https://www.interserver.net/tips/kb/import-export-databases-mysql-command-line/)
  - [Inception 42 project - Configuring mariaDB and installing wp-cli](https://medium.com/@ssterdev/inception-42-project-part-ii-19a06962cf3b)
  - [Create and give permissions to a user](https://www.daniloaz.com/en/how-to-create-a-user-in-mysql-mariadb-and-grant-permissions-on-a-specific-database/) 
  - [How to give all privileges for a user on a database](https://chartio.com/resources/tutorials/how-to-grant-all-privileges-on-a-database-in-mysql/)
 
-### - NGINX official documentation
+### NGINX official documentation
  - [NGINX documentation](https://nginx.org/en/docs/index.html)
  - [location explanations](https://www.digitalocean.com/community/tutorials/nginx-location-directive)
  - [What is a proxy server](https://www.varonis.com/fr/blog/serveur-proxy)
