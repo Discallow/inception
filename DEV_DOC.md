@@ -21,24 +21,30 @@ WP_USER_PASSWORD=usersecret
 ### Repository Structure Overview
 
 ├── srcs/
-|   ├── .env
+│   ├── .env
 │   ├── docker-compose.yml
 │   ├── requirements/
 │   │   ├── nginx/
 │   │   │   ├── Dockerfile
-│   │   │   └── conf/nginx.conf
+│   │   │   └── conf/
+│   │   │       └── nginx.conf
 │   │   ├── mariadb/
-|   |   |   ├── conf/50-server.cnf
-│   │   │   ├── tools/entrypoint.sh
-│   │   │   └── Dockerfile
+│   │   │   ├── Dockerfile
+│   │   │   ├── conf/
+│   │   │   │   └── 50-server.cnf
+│   │   │   └── tools/
+│   │   │       └── entrypoint.sh
 │   │   └── wordpress/
 │   │       ├── Dockerfile
-|   |       ├── conf/www.conf
-│   │       └── tools/wordpress.sh
+│   │       ├── conf/
+│   │       │   └── www.conf
+│   │       └── tools/
+│   │           └── wordpress.sh
 ├── .env
 ├── Makefile
 ├── USER_DOC.md
 └── DEV_DOC.md
+
 
 
 ## Building and Launching the Project
