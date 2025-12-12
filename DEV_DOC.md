@@ -18,71 +18,79 @@ WP_ADMIN_PASSWORD=wpsecret
 WP_USER_PASSWORD=usersecret
 ```
 
-2. Building and Launching the Project
+### Repository Structure Overview
+
+├── srcs/
+|   ├── .env
+│   ├── docker-compose.yml
+│   ├── requirements/
+│   │   ├── nginx/
+│   │   │   ├── Dockerfile
+│   │   │   └── conf/nginx.conf
+│   │   ├── mariadb/
+|   |   |   ├── conf/50-server.cnf
+│   │   │   ├── tools/entrypoint.sh
+│   │   │   └── Dockerfile
+│   │   └── wordpress/
+│   │       ├── Dockerfile
+|   |       ├── conf/www.conf
+│   │       └── tools/wordpress.sh
+├── .env
+├── Makefile
+├── USER_DOC.md
+└── DEV_DOC.md
+
+
+## Building and Launching the Project
 Build and start all containers:
 
+```bash
 make
-# or directly
-docker compose up --build -d
+```
+
 This process will:
 
-Build images for NGINX, WordPress + PHP-FPM, and MariaDB
+- Build images for NGINX, WordPress + PHP-FPM, and MariaDB
+- Create volumes and networks
+- Initialize WordPress and the database
+- Start all services in detached mode
 
-Create volumes and networks
+## Managing Containers and Volumes
 
-Initialize WordPress and the database
+- Stopping containers:
 
-Start all services in detached mode
-
-3. Managing Containers and Volumes
-Stopping containers:
-bash
-Copiar código
+```bash
 make down
-# or
-docker compose down
-Cleaning volumes:
-bash
-Copiar código
-docker volume rm $(docker volume ls -q)
-Remove host bind mount data (if used):
+```
 
-bash
-Copiar código
+- Cleaning volumes:
+
+```bash
+docker volume rm $(docker volume ls -q)
+```
+
+- Remove host bind mount data (if used):
+
+```bash
 sudo rm -rf /home/$USER/data/wordpress/*
 sudo rm -rf /home/$USER/data/mysql/*
-Logs and troubleshooting:
+```
+- Logs and troubleshooting:
 View logs for all containers:
 
-bash
-Copiar código
+```bash
 docker compose logs --tail=100 -f
+```
+
 View logs for a single service:
 
-bash
-Copiar código
-docker compose logs -f wordpress
-4. Data Persistence
-MariaDB data: stored in Docker volume mariadb_data (or bind mount if configured)
+```bash
+docker compose logs -f wordpress/mariadb/nginx
+```
 
-WordPress files: stored in Docker volume wordpress_data (or bind mount if configured)
+## Data Persistence
 
-Even if containers are removed, data persists in Docker volumes. Bind mounts store data directly on the host path.
+- MariaDB data: store MariaDB database files on host (/home/$USER/data/mysql)
+- WordPress files: store WordPress files on host (/home/$USER/data/wordpress)
 
-5. Advanced Developer Tasks
-Rebuild images after Dockerfile changes:
-
-bash
-Copiar código
-docker compose up --build --force-recreate -d
-Access a container shell for debugging:
-
-bash
-Copiar código
-docker exec -it wordpress bash
-docker exec -it mariadb bash
-Run WP-CLI commands inside the WordPress container:
-
-bash
-Copiar código
-docker exec -it wordpress wp plugin list --allow-root
+**Even if containers are removed, data persists in Docker volumes. Bind mounts store data directly on the host path.**
