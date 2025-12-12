@@ -19,7 +19,7 @@ WP_USER_PASSWORD=usersecret
 ```
 
 ### Repository Structure Overview
-
+```
 ├── srcs/
 │   ├── .env
 │   ├── docker-compose.yml
@@ -44,7 +44,7 @@ WP_USER_PASSWORD=usersecret
 ├── Makefile
 ├── USER_DOC.md
 └── DEV_DOC.md
-
+```
 
 
 ## Building and Launching the Project
